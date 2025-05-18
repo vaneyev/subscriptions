@@ -1,0 +1,17 @@
+version: '3'
+services:
+  postgres:
+    image: 'postgres:latest'
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=subscriptions
+  api:
+    build:
+      dockerfile: Dockerfile
+    environment:
+      - PGUSER=postgres
+      - PGPASSWORD=secret
+      - PGURL=jdbc:postgresql://postgres:5432/subscriptions
+    ports:
+      - '8080:8080'
